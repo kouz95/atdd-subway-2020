@@ -25,7 +25,9 @@
             - [ ] ATDD
             - [ ] 인수 테스트
                 - [x] 요금과 관련된 인수 조건 추가
-            - [ ] 컨트롤러 테스트
+                    - [x] MapController 테스트
+                    - [ ] MapSevice 테스트
+                        - [ ] SubwayPath.calculateFare() 단위 테스트
 
 ## 🤔 미션 제출 방법
 - 진행 방식은 오프라인 코딩 테스트와 동일하다.
