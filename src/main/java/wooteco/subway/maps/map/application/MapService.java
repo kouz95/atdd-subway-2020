@@ -2,6 +2,7 @@ package wooteco.subway.maps.map.application;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -49,12 +50,12 @@ public class MapService {
         return new MapResponse(lineResponses);
     }
 
-    public PathResponse findPath(Long source, Long target, PathType type, LoginMember loginMember) {
+    public PathResponse findPath(Long source, Long target, PathType type, Optional<LoginMember> optionalLoginMember) {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
         int lineExtraFare = lineExtraFareCalculateService.calculateExtraFare(subwayPath, lines);
-        int fare = fareDiscountService.calculateFare(subwayPath, loginMember);
+        int fare = fareDiscountService.calculateFare(subwayPath, optionalLoginMember);
 
         return PathResponseAssembler.assemble(subwayPath, stations, fare);
     }
