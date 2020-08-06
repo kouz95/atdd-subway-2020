@@ -26,6 +26,7 @@
             - [ ] 인수 테스트
                 - [x] 요금과 관련된 인수 조건 추가
                     - [x] MapController 테스트
+                        - [x] Path 문서화
                     - [ ] MapSevice 테스트
                         - [ ] SubwayPath.calculateFare() 단위 테스트
 
