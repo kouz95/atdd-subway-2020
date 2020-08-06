@@ -29,14 +29,14 @@ public class MapService {
     private StationService stationService;
     private PathService pathService;
     private LineExtraFareService lineExtraFareCalculateService;
-    private FareDiscountService fareDiscountService;
+    private MemberAgeFareDiscountService memberAgeFareDiscountService;
 
-    public MapService(LineService lineService, StationService stationService, PathService pathService, LineExtraFareService lineExtraFareCalculateService, FareDiscountService fareDiscountService) {
+    public MapService(LineService lineService, StationService stationService, PathService pathService, LineExtraFareService lineExtraFareCalculateService, MemberAgeFareDiscountService memberAgeFareDiscountService) {
         this.lineService = lineService;
         this.stationService = stationService;
         this.pathService = pathService;
         this.lineExtraFareCalculateService = lineExtraFareCalculateService;
-        this.fareDiscountService = fareDiscountService;
+        this.memberAgeFareDiscountService = memberAgeFareDiscountService;
     }
 
     public MapResponse findMap() {
@@ -55,7 +55,7 @@ public class MapService {
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
         int lineExtraFare = lineExtraFareCalculateService.calculateExtraFare(subwayPath, lines);
-        int fare = fareDiscountService.calculateFare(subwayPath, optionalLoginMember);
+        int fare = memberAgeFareDiscountService.calculateTotalFare(subwayPath, optionalLoginMember, lineExtraFare);
 
         return PathResponseAssembler.assemble(subwayPath, stations, fare);
     }

@@ -8,6 +8,7 @@ import static wooteco.subway.members.member.fixture.LoginMemberFixture.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ public class MapServiceTest {
     @Mock
     private LineExtraFareService lineExtraFareService;
     @Mock
-    private FareDiscountService fareDiscountService;
+    private MemberAgeFareDiscountService memberAgeFareDiscountService;
 
     private Map<Long, Station> stations;
     private List<Line> lines;
@@ -79,7 +80,8 @@ public class MapServiceTest {
         );
         subwayPath = new SubwayPath(lineStations);
 
-        mapService = new MapService(lineService, stationService, pathService, lineExtraFareService, fareDiscountService);
+        mapService = new MapService(lineService, stationService, pathService, lineExtraFareService,
+            memberAgeFareDiscountService);
     }
 
     @Test
@@ -88,7 +90,7 @@ public class MapServiceTest {
         when(pathService.findPath(anyList(), anyLong(), anyLong(), any())).thenReturn(subwayPath);
         when(stationService.findStationsByIds(anyList())).thenReturn(stations);
 
-        PathResponse pathResponse = mapService.findPath(1L, 3L, PathType.DISTANCE, LOGIN_MEMBER);
+        PathResponse pathResponse = mapService.findPath(1L, 3L, PathType.DISTANCE, Optional.of(LOGIN_MEMBER));
 
         assertThat(pathResponse.getStations()).isNotEmpty();
         assertThat(pathResponse.getDuration()).isNotZero();

@@ -1,19 +1,19 @@
 package wooteco.subway.maps.map.ui;
 
-import wooteco.subway.maps.map.application.MapService;
-import wooteco.subway.maps.map.domain.PathType;
-import wooteco.subway.maps.map.dto.PathResponse;
-import wooteco.subway.members.member.domain.LoginMember;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static wooteco.subway.members.member.fixture.LoginMemberFixture.*;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
-import static wooteco.subway.members.member.fixture.LoginMemberFixture.*;
+import wooteco.subway.maps.map.application.MapService;
+import wooteco.subway.maps.map.domain.PathType;
+import wooteco.subway.maps.map.dto.PathResponse;
 
 public class MapControllerTest {
     @Test
@@ -22,7 +22,8 @@ public class MapControllerTest {
         MapController controller = new MapController(mapService);
         when(mapService.findPath(anyLong(), anyLong(), any(), any())).thenReturn(new PathResponse());
 
-        ResponseEntity<PathResponse> entity = controller.findPath(1L, 2L, PathType.DISTANCE, LOGIN_MEMBER);
+        ResponseEntity<PathResponse> entity = controller.findPath(1L, 2L, PathType.DISTANCE, Optional
+            .of(LOGIN_MEMBER));
 
         assertThat(entity.getBody()).isNotNull();
     }
