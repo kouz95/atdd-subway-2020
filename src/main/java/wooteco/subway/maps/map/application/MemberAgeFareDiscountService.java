@@ -11,13 +11,13 @@ import wooteco.subway.members.member.domain.LoginMember;
 
 @Service
 public class MemberAgeFareDiscountService {
-    public int calculateTotalFare(SubwayPath subwayPath, Optional<LoginMember> optionalLoginMember, int lineExtraFare) {
-        int fare = subwayPath.calculateFare() + lineExtraFare;
+    public int calculateTotalFare(SubwayPath subwayPath, Optional<LoginMember> optionalLoginMember, int extraFare) {
+        int totalFare = subwayPath.calculateFare() + extraFare;
         if (optionalLoginMember.isPresent()) {
             DiscountStrategyByAge discountStrategyByAge = AgeType.of(optionalLoginMember.get().getAge())
                 .getDiscountStrategyByAge();
-            return discountStrategyByAge.calculate(fare);
+            return discountStrategyByAge.calculate(totalFare);
         }
-        return fare;
+        return totalFare;
     }
 }

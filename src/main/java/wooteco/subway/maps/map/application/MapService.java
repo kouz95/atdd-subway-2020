@@ -55,9 +55,9 @@ public class MapService {
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
         int lineExtraFare = lineExtraFareCalculateService.calculateExtraFare(subwayPath, lines);
-        int fare = memberAgeFareDiscountService.calculateTotalFare(subwayPath, optionalLoginMember, lineExtraFare);
+        int totalFare = memberAgeFareDiscountService.calculateTotalFare(subwayPath, optionalLoginMember, lineExtraFare);
 
-        return PathResponseAssembler.assemble(subwayPath, stations, fare);
+        return PathResponseAssembler.assemble(subwayPath, stations, totalFare);
     }
 
     private Map<Long, Station> findStations(List<Line> lines) {
