@@ -1,12 +1,11 @@
 package wooteco.subway.maps.map.documentation;
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.mockito.ArgumentMatchers.any;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -68,7 +67,7 @@ public class PathDocumentation extends Documentation {
                 getDocumentRequest(),
                 getDocumentResponse(),
                 requestHeaders(
-                    headerWithName("Authorization").description("Bearer auth credentials")),
+                    headerWithName("Authorization").description("Optional - Bearer auth credentials")),
                 responseFields(
                     fieldWithPath("stations[]").type(JsonFieldType.ARRAY).description("지하철역 목록"),
                     fieldWithPath("stations[].id").type(JsonFieldType.NUMBER).description("지하철역 아이디"),
