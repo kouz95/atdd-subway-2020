@@ -15,6 +15,11 @@
 - [프론트엔드 미션](https://github.com/woowacourse/atdd-subway-2020/blob/master/frontend-mission.md)
 - [백엔드 미션](https://github.com/woowacourse/atdd-subway-2020/blob/master/backend-mission.md)
 
+## 기능 목록
+### 1. 경로 조회 응답 결과에 `요금` 정보 추가(필수)
+- [ ] 경로 검색 페이지
+    - [ ] 경로 검색 페이지 접근시 400 에러 발생
+
 ## 🤔 미션 제출 방법
 - 진행 방식은 오프라인 코딩 테스트와 동일하다.
 - 저장소를 Fork하여 자신의 저장소에서 미션 구현을 완료하고, Pull Request를 통해 미션을 제출한다.
