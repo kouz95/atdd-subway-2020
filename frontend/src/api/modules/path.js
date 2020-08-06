@@ -2,7 +2,7 @@ import ApiService from '@/api'
 
 const PathService = {
   get() {
-    return ApiService.get()
+    return ApiService.get('/paths')
   }
 }
 
