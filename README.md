@@ -30,8 +30,11 @@
                                 - [x] Path 문서화
                             - [ ] MapSevice 테스트
                                 - [x] SubwayPath.calculateFare() 단위 테스트
-                            - [ ] 노선별 추가 요금 기능
-                                - [x] Line 인수 테스트 변경
+                                - [ ] 노선별 추가 요금 기능
+                                    - [x] Line 인수 테스트 변경
+                                        - [x] Line domain에 extraFare 추가
+                                    - [ ] 노선 별 추가 요금 서비스 생성
+                                        - [ ] 서비스 테스트
 
 ## 🤔 미션 제출 방법
 - 진행 방식은 오프라인 코딩 테스트와 동일하다.
