@@ -1,10 +1,16 @@
 package wooteco.subway.maps.line.domain;
 
-import wooteco.subway.common.domain.BaseEntity;
-
-import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import wooteco.subway.common.domain.BaseEntity;
 
 @Entity
 public class Line extends BaseEntity {
@@ -24,13 +30,18 @@ public class Line extends BaseEntity {
     public Line() {
     }
 
-    public Line(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime, int extraFare) {
+    public Line(Long id, String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime, int extraFare) {
+        this.id = id;
         this.name = name;
         this.color = color;
         this.startTime = startTime;
         this.endTime = endTime;
         this.intervalTime = intervalTime;
         this.extraFare = extraFare;
+    }
+
+    public Line(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime, int extraFare) {
+        this(null, name, color, startTime, endTime, intervalTime, extraFare);
     }
 
     public void update(Line line) {

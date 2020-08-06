@@ -1,9 +1,10 @@
 package wooteco.subway.maps.map.domain;
 
-import com.google.common.collect.Lists;
+import static java.util.stream.Collectors.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import com.google.common.collect.Lists;
 
 public class SubwayPath {
     private static final int BASIC_FARE = 1250;
@@ -18,11 +19,19 @@ public class SubwayPath {
         return lineStationEdges;
     }
 
+    public List<Long> extractLineId() {
+        List<Long> lineIds = lineStationEdges.stream()
+            .map(LineStationEdge::getLineId)
+            .collect(toList());
+
+        return lineIds;
+    }
+
     public List<Long> extractStationId() {
         List<Long> stationIds = Lists.newArrayList(lineStationEdges.get(0).getLineStation().getPreStationId());
         stationIds.addAll(lineStationEdges.stream()
                 .map(it -> it.getLineStation().getStationId())
-                .collect(Collectors.toList()));
+                .collect(toList()));
 
         return stationIds;
     }

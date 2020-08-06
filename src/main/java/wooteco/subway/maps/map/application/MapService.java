@@ -1,11 +1,16 @@
 package wooteco.subway.maps.map.application;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import wooteco.subway.maps.line.application.LineService;
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.line.dto.LineStationResponse;
-import wooteco.subway.maps.map.domain.FareDiscountService;
 import wooteco.subway.maps.map.domain.PathType;
 import wooteco.subway.maps.map.domain.SubwayPath;
 import wooteco.subway.maps.map.dto.MapResponse;
@@ -16,24 +21,20 @@ import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.dto.StationResponse;
 import wooteco.subway.members.member.domain.LoginMember;
 
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @Service
 @Transactional
 public class MapService {
     private LineService lineService;
     private StationService stationService;
     private PathService pathService;
+    private LineExtraFareService lineExtraFareCalculateService;
     private FareDiscountService fareDiscountService;
 
-    public MapService(LineService lineService, StationService stationService, PathService pathService, FareDiscountService fareDiscountService) {
+    public MapService(LineService lineService, StationService stationService, PathService pathService, LineExtraFareService lineExtraFareCalculateService, FareDiscountService fareDiscountService) {
         this.lineService = lineService;
         this.stationService = stationService;
         this.pathService = pathService;
+        this.lineExtraFareCalculateService = lineExtraFareCalculateService;
         this.fareDiscountService = fareDiscountService;
     }
 
@@ -52,7 +53,8 @@ public class MapService {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
-        int fare = fareDiscountService.calculateFare(subwayPath, loginMember.getAge());
+        lineExtraFareCalculateService.calculateExtraFare(subwayPath, lines);
+        int fare = fareDiscountService.calculateFare(subwayPath, loginMember);
 
         return PathResponseAssembler.assemble(subwayPath, stations, fare);
     }

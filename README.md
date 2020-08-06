@@ -19,22 +19,23 @@
 ### 1. 경로 조회 응답 결과에 `요금` 정보 추가(필수)
 - [ ] 경로 검색 페이지
     - [ ] 경로 검색 페이지 접근시 400 에러 발생
-            - [ ] front api 연결
-                - [x] path.js에 endpoint 추가
-                    - [ ] param 추가
-            - [ ] back api 구현
-                - [ ] ATDD
-                - [ ] 인수 테스트
-                        - [x] 요금과 관련된 인수 조건 추가
-                            - [x] MapController 테스트
-                                - [x] Path 문서화
-                            - [ ] MapSevice 테스트
-                                - [x] SubwayPath.calculateFare() 단위 테스트
-                                - [ ] 노선별 추가 요금 기능
-                                    - [x] Line 인수 테스트 변경
-                                        - [x] Line domain에 extraFare 추가
-                                    - [ ] 노선 별 추가 요금 서비스 생성
-                                        - [ ] 서비스 테스트
+        - [ ] front api 연결
+            - [x] path.js에 endpoint 추가
+                - [ ] param 추가
+        - [ ] back api 구현
+            - [ ] ATDD
+            - [ ] 인수 테스트
+                - [x] 요금과 관련된 인수 조건 추가
+                    - [x] MapController 테스트
+                        - [x] Path 문서화
+                    - [ ] MapSevice 테스트
+                        - [x] SubwayPath.calculateFare() 단위 테스트
+                        - [x] 노선별 추가 요금 기능
+                            - [x] Line 인수 테스트 변경
+                                - [x] Line domain에 extraFare 추가
+                            - [x] 노선 별 추가 요금 서비스 생성
+                                - [x] 서비스 테스트
+        - [ ] 제출 전 컨벤션 확인 (커밋 메세지로 확인하기)
 
 ## 🤔 미션 제출 방법
 - 진행 방식은 오프라인 코딩 테스트와 동일하다.

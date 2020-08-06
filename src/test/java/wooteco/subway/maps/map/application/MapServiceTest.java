@@ -1,19 +1,13 @@
 package wooteco.subway.maps.map.application;
 
-import com.google.common.collect.Lists;
-import wooteco.subway.maps.line.application.LineService;
-import wooteco.subway.maps.line.domain.Line;
-import wooteco.subway.maps.line.domain.LineStation;
-import wooteco.subway.maps.map.domain.FareDiscountService;
-import wooteco.subway.maps.map.domain.LineStationEdge;
-import wooteco.subway.maps.map.domain.PathType;
-import wooteco.subway.maps.map.domain.SubwayPath;
-import wooteco.subway.maps.map.dto.MapResponse;
-import wooteco.subway.maps.map.dto.PathResponse;
-import wooteco.subway.maps.station.application.StationService;
-import wooteco.subway.maps.station.domain.Station;
-import wooteco.subway.common.TestObjectUtils;
-import wooteco.subway.members.member.domain.LoginMember;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static wooteco.subway.members.member.fixture.LoginMemberFixture.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,14 +15,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
-import static wooteco.subway.members.member.fixture.LoginMemberFixture.*;
+import com.google.common.collect.Lists;
+import wooteco.subway.common.TestObjectUtils;
+import wooteco.subway.maps.line.application.LineService;
+import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.LineStation;
+import wooteco.subway.maps.map.domain.LineStationEdge;
+import wooteco.subway.maps.map.domain.PathType;
+import wooteco.subway.maps.map.domain.SubwayPath;
+import wooteco.subway.maps.map.dto.MapResponse;
+import wooteco.subway.maps.map.dto.PathResponse;
+import wooteco.subway.maps.station.application.StationService;
+import wooteco.subway.maps.station.domain.Station;
 
 @ExtendWith(MockitoExtension.class)
 public class MapServiceTest {
@@ -39,6 +37,8 @@ public class MapServiceTest {
     private StationService stationService;
     @Mock
     private PathService pathService;
+    @Mock
+    private LineExtraFareService lineExtraFareService;
     @Mock
     private FareDiscountService fareDiscountService;
 
@@ -79,7 +79,7 @@ public class MapServiceTest {
         );
         subwayPath = new SubwayPath(lineStations);
 
-        mapService = new MapService(lineService, stationService, pathService, fareDiscountService);
+        mapService = new MapService(lineService, stationService, pathService, lineExtraFareService, fareDiscountService);
     }
 
     @Test
