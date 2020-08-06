@@ -1,6 +1,5 @@
 package wooteco.security.config;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,8 @@ import wooteco.security.web.OptionalAuthenticationPrincipalArgumentResolver;
 public class AuthenticationPrincipalConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List argumentResolvers) {
-        argumentResolvers.add(Arrays.asList(createAuthenticationPrincipalArgumentResolver(), createOptionalAuthenticationPrincipalArgumentResolver()));
+        argumentResolvers.add(createAuthenticationPrincipalArgumentResolver());
+        argumentResolvers.add(createOptionalAuthenticationPrincipalArgumentResolver());
     }
 
     @Bean

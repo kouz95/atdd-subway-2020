@@ -13,6 +13,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import wooteco.security.core.Authentication;
 import wooteco.security.core.OptionalAuthenticationPrincipal;
 import wooteco.security.core.context.SecurityContextHolder;
+import wooteco.subway.members.member.domain.LoginMember;
 
 public class OptionalAuthenticationPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
@@ -28,21 +29,21 @@ public class OptionalAuthenticationPrincipalArgumentResolver implements HandlerM
             return Optional.empty();
         }
         if (authentication.getPrincipal() instanceof Map) {
-            return Optional.of(extractPrincipal(parameter, authentication));
+            return extractPrincipal(parameter, authentication);
         }
 
-        return Optional.of(authentication.getPrincipal());
+        return authentication.getPrincipal();
     }
 
     private Object extractPrincipal(MethodParameter parameter, Authentication authentication) {
         try {
             Map<String, String> principal = (Map)authentication.getPrincipal();
 
-            Object[] params = Arrays.stream(parameter.getParameterType().getDeclaredFields())
+            Object[] params = Arrays.stream(LoginMember.class.getDeclaredFields())
                 .map(it -> toObject(it.getType(), principal.get(it.getName())))
                 .toArray();
 
-            return parameter.getParameterType().getConstructors()[0].newInstance(params);
+            return Optional.of(LoginMember.class.getConstructors()[0].newInstance(params));
         } catch (Exception e) {
             throw new AuthorizationException();
         }
