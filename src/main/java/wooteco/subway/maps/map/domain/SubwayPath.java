@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SubwayPath {
+    private static final int BASIC_FARE = 1250;
+
     private List<LineStationEdge> lineStationEdges;
 
     public SubwayPath(List<LineStationEdge> lineStationEdges) {
@@ -31,5 +33,11 @@ public class SubwayPath {
 
     public int calculateDistance() {
         return lineStationEdges.stream().mapToInt(it -> it.getLineStation().getDistance()).sum();
+    }
+
+    public int calculateFare() {
+        int distance = calculateDistance();
+        int extraCharge = ExtraChargeType.of(distance).calculateExtraCharge(distance);
+        return BASIC_FARE + extraCharge;
     }
 }

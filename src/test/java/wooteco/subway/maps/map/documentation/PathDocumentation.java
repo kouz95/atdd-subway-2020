@@ -52,7 +52,7 @@ public class PathDocumentation extends Documentation {
             new StationResponse(3L, "양재역", LocalDateTime.now(), LocalDateTime.now())
         );
         PathResponse pathResponse = new PathResponse(stations, 3, 4, 1250);
-        when(mapService.findPath(any(), any(), any())).thenReturn(pathResponse);
+        when(mapService.findPath(any(), any(), any(), any())).thenReturn(pathResponse);
 
         given().log().all().
             header("Authorization", "Bearer " + tokenResponse.getAccessToken()).
