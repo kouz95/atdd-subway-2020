@@ -1,19 +1,23 @@
 package wooteco.subway.maps.map.acceptance;
 
-import com.google.common.collect.Lists;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
+import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.*;
+import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.*;
+import static wooteco.subway.members.member.acceptance.MemberAcceptanceTest.*;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.Lists;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import wooteco.security.core.TokenResponse;
 import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.station.acceptance.step.StationAcceptanceStep;
 import wooteco.subway.maps.station.dto.StationResponse;
-
-import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.지하철_노선에_지하철역_등록되어_있음;
-import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.*;
 
 @DisplayName("지하철 경로 조회")
 public class PathAcceptanceTest extends AcceptanceTest {
@@ -60,10 +64,27 @@ public class PathAcceptanceTest extends AcceptanceTest {
     @DisplayName("두 역의 최단 거리 경로를 조회한다.")
     @Test
     void findPathByDistance() {
-        //when
+        // when
         ExtractableResponse<Response> response = 거리_경로_조회_요청("DISTANCE", 1L, 3L);
 
-        //then
+        // then
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+        총_거리와_소요_시간을_함께_응답함(response, 3, 4);
+        요금_정보를_함께_응답함(response, 1250);
+    }
+
+
+    @DisplayName("로그인 한 멤버가 두 역의 최단 거리 경로를 조회한다.")
+    @Test
+    void findPathByDistanceWithLoginMember() {
+        // given
+        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
+
+        // when
+        TokenResponse tokenResponse = 로그인_되어_있음(EMAIL, PASSWORD);
+        ExtractableResponse<Response> response = 거리_경로_조회_요청_로그인_멤버("DISTANCE", 1L, 3L, tokenResponse);
+
+        // then
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
         총_거리와_소요_시간을_함께_응답함(response, 3, 4);
         요금_정보를_함께_응답함(response, 1250);
